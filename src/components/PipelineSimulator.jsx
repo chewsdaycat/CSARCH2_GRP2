@@ -38,6 +38,7 @@ export default function PipelineSimulator() {
         <Oscilloscope speed={speed} />
         <SquareWave speed={speed} />
       </div>
+      
 
       {/* --------------------------------------------------------
           SECTION 3: INSTRUCTION DISPLAY — Choa
