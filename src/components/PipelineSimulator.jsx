@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import Parallax from './Parallax';
 
 const MIN_HZ = 0.5;
 const MAX_HZ = 10;
@@ -15,48 +16,262 @@ export default function PipelineSimulator() {
       display: 'flex',
       flexDirection: 'column',
       gap: '2.5rem',
-      fontFamily: 'JetBrains Mono, monospace'
+      fontFamily: 'JetBrains Mono, monospace',
+      position: 'relative',
+      overflow: 'hidden',
+      padding: '2rem'
     }}>
-
-      {/* HEADER BANNER - TOP MOST PART */}
-      <div style={{ textAlign: 'center', borderBottom: '1px solid #1a2540', paddingBottom: '2rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem', color: '#00ffc8', fontWeight: 'bold', fontSize: '1.6rem', letterSpacing: '2px' }}>
-          <span style={{ fontSize: '1.8rem', textShadow: '0 0 10px rgba(0,255,200,0.5)' }}>❖</span> CLOCKWORK
-        </div>
-        <div style={{ color: '#8892b0', fontSize: '0.85rem', marginTop: '0.3rem', letterSpacing: '1px' }}>
-          The Rhythm of the Processor
-        </div>
-
-        <h1 style={{ color: '#e8edf2', fontSize: '2.2rem', margin: '1.5rem 0 0.5rem 0', fontWeight: '700', letterSpacing: '1px' }}>
-          TICK, TOCK, EXECUTE
-        </h1>
-        <p style={{ color: '#8892b0', fontSize: '1rem', margin: 0, maxWidth: '500px', marginLeft: 'auto', marginRight: 'auto' }}>
-          Following the Clock through the CPU pipeline
-        </p>
+      {/* BACKGROUND DECORATIVE PARALLAX LAYERS */}
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        pointerEvents: 'none',
+        zIndex: 0,
+        overflow: 'hidden'
+      }}>
+        <Parallax speed={0.05} direction="vertical" offset={-50}>
+          <div style={{
+            position: 'absolute',
+            top: '10%',
+            right: '5%',
+            width: '300px',
+            height: '300px',
+            background: 'radial-gradient(circle, rgba(0,255,200,0.03) 0%, transparent 70%)',
+            borderRadius: '50%'
+          }} />
+        </Parallax>
+        <Parallax speed={0.08} direction="vertical" offset={-30}>
+          <div style={{
+            position: 'absolute',
+            bottom: '10%',
+            left: '5%',
+            width: '200px',
+            height: '200px',
+            background: 'radial-gradient(circle, rgba(78,205,196,0.03) 0%, transparent 70%)',
+            borderRadius: '50%'
+          }} />
+        </Parallax>
+        <Parallax speed={0.03} direction="vertical" offset={-80}>
+          <div style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '500px',
+            height: '500px',
+            background: 'radial-gradient(circle, rgba(255,107,107,0.02) 0%, transparent 70%)',
+            borderRadius: '50%'
+          }} />
+        </Parallax>
       </div>
 
-      {/* SECTION 1: CLOCK SPEED SLIDER */}
-      <ClockSlider speed={speed} onSpeedChange={setSpeed} />
+      {/* MAIN CONTENT WITH PARALLAX */}
+      <div style={{ position: 'relative', zIndex: 1 }}>
 
-      {/* SECTION 2: OSCILLOSCOPE + SQUARE WAVE */}
-      <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-        <Oscilloscope speed={speed} />
-        <SquareWave speed={speed} />
+        {/* HEADER BANNER WITH PARALLAX AND BACKGROUND IMAGE */}
+        <Parallax speed={0.3} direction="vertical" offset={-20}>
+          <div style={{ 
+            textAlign: 'center', 
+            borderBottom: '1px solid #1a2540', 
+            paddingBottom: '2rem',
+            position: 'relative',
+            overflow: 'hidden',
+            borderRadius: '12px',
+            minHeight: '350px'
+          }}>
+            {/* LAYER 1: Circuit pattern background (slowest) */}
+            <Parallax speed={0.05} direction="vertical" offset={-30}>
+              <div style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundImage: 'url("/images/circuit-pattern.png")',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                opacity: 0.08,
+                zIndex: 0
+              }} />
+            </Parallax>
+
+            {/* LAYER 2: Main background image (medium speed) */}
+            <Parallax speed={0.1} direction="vertical" offset={-20}>
+              <div style={{
+                position: 'absolute',
+                top: '-10%',
+                left: '-10%',
+                right: '-10%',
+                bottom: '-10%',
+                backgroundImage: 'url("/images/bg.jpg")',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                opacity: 0.15,
+                filter: 'blur(1px)',
+                zIndex: 0
+              }} />
+            </Parallax>
+
+            {/* LAYER 3: Glowing accent (fastest) */}
+            <Parallax speed={0.2} direction="vertical" offset={-10}>
+              <div style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: '600px',
+                height: '300px',
+                background: 'radial-gradient(ellipse, rgba(0,255,200,0.06) 0%, transparent 70%)',
+                borderRadius: '50%',
+                pointerEvents: 'none',
+                zIndex: 0
+              }} />
+            </Parallax>
+
+            {/* LAYER 4: Additional glow from bottom */}
+            <Parallax speed={0.15} direction="vertical" offset={-15}>
+              <div style={{
+                position: 'absolute',
+                bottom: 0,
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: '80%',
+                height: '100px',
+                background: 'linear-gradient(to top, rgba(0,255,200,0.03) 0%, transparent 100%)',
+                zIndex: 0
+              }} />
+            </Parallax>
+
+            {/* CONTENT */}
+            <div style={{ 
+              position: 'relative', 
+              zIndex: 1, 
+              padding: '2rem',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              minHeight: '350px'
+            }}>
+              <div style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                gap: '0.6rem', 
+                color: '#00ffc8', 
+                fontWeight: 'bold', 
+                fontSize: '1.6rem', 
+                letterSpacing: '2px',
+                textShadow: '0 2px 20px rgba(0,0,0,0.5)'
+              }}>
+                <span style={{ fontSize: '1.8rem', textShadow: '0 0 10px rgba(0,255,200,0.5)' }}>❖</span> 
+                CLOCKWORK
+              </div>
+              <div style={{ 
+                color: '#8892b0', 
+                fontSize: '0.85rem', 
+                marginTop: '0.3rem', 
+                letterSpacing: '1px',
+                textShadow: '0 2px 10px rgba(0,0,0,0.5)'
+              }}>
+                The Rhythm of the Processor
+              </div>
+
+              <h1 style={{ 
+                color: '#e8edf2', 
+                fontSize: '2.8rem', 
+                margin: '1.5rem 0 0.5rem 0', 
+                fontWeight: '700', 
+                letterSpacing: '3px',
+                textShadow: '0 0 40px rgba(0,255,200,0.15), 0 4px 30px rgba(0,0,0,0.7)',
+                position: 'relative'
+              }}>
+                TICK, TOCK, EXECUTE
+                {/* Decorative underline */}
+                <div style={{
+                  position: 'absolute',
+                  bottom: '-10px',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  width: '120px',
+                  height: '2px',
+                  background: 'linear-gradient(90deg, transparent, #00ffc8, transparent)',
+                  boxShadow: '0 0 20px rgba(0,255,200,0.3)'
+                }} />
+              </h1>
+              <p style={{ 
+                color: '#8892b0', 
+                fontSize: '1rem', 
+                margin: '1.5rem 0 0 0', 
+                maxWidth: '500px', 
+                marginLeft: 'auto', 
+                marginRight: 'auto',
+                textShadow: '0 2px 10px rgba(0,0,0,0.5)',
+                letterSpacing: '0.5px'
+              }}>
+                Following the Clock through the CPU pipeline
+              </p>
+
+              {/* Small decorative CPU icon */}
+              <div style={{
+                marginTop: '1rem',
+                color: 'rgba(0,255,200,0.1)',
+                fontSize: '0.8rem',
+                letterSpacing: '4px'
+              }}>
+                ⚡ ◈ ◈ ◈ ⚡
+              </div>
+            </div>
+          </div>
+        </Parallax>
+
+        {/* SECTION 1: CLOCK SPEED SLIDER WITH PARALLAX */}
+        <Parallax speed={0.2} direction="vertical" offset={-10}>
+          <ClockSlider speed={speed} onSpeedChange={setSpeed} />
+        </Parallax>
+
+        {/* SECTION 2: OSCILLOSCOPE + SQUARE WAVE WITH PARALLAX */}
+        <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <Parallax speed={0.15} direction="vertical" offset={-5}>
+            <Oscilloscope speed={speed} />
+          </Parallax>
+          <Parallax speed={0.25} direction="vertical" offset={-15}>
+            <SquareWave speed={speed} />
+          </Parallax>
+        </div>
+
+        {/* SECTION 3: INSTRUCTION DISPLAY WITH PARALLAX */}
+        <Parallax speed={0.3} direction="vertical" offset={-20}>
+          <InstructionDisplay speed={speed} />
+        </Parallax>
+
+        {/* SECTION 4: GANTT PIPELINE TABLE WITH PARALLAX */}
+        <Parallax speed={0.4} direction="vertical" offset={-25}>
+          <PipelineGantt speed={speed} />
+        </Parallax>
+
       </div>
-
-      {/* SECTION 3: INSTRUCTION DISPLAY */}
-      <InstructionDisplay speed={speed} />
-
-      {/* SECTION 4: GANTT PIPELINE TABLE */}
-      <PipelineGantt speed={speed} />
-
     </div>
   );
 }
 
+// Clock Slider Component
 function ClockSlider({ speed, onSpeedChange }) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', background: '#0e1524', padding: '1.5rem', borderRadius: '8px', border: '1px solid #1a2540' }}>
+    <div style={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      gap: '0.75rem', 
+      background: 'rgba(14, 21, 36, 0.8)',
+      backdropFilter: 'blur(10px)',
+      padding: '1.5rem', 
+      borderRadius: '8px', 
+      border: '1px solid #1a2540',
+      boxShadow: '0 4px 30px rgba(0,0,0,0.3)'
+    }}>
       <style>{`
         input[type=range].custom-slider {
           -webkit-appearance: none;
@@ -100,6 +315,7 @@ function ClockSlider({ speed, onSpeedChange }) {
   );
 }
 
+// Oscilloscope Component
 function Oscilloscope({ speed }) {
   const canvasRef = useRef(null);
   const angleRef = useRef(0);
@@ -199,6 +415,7 @@ function Oscilloscope({ speed }) {
   return <canvas ref={canvasRef} style={{ display: 'block', border: '1px solid #1a2540', borderRadius: '8px', flexGrow: 1, maxWidth: '240px' }} />;
 }
 
+// Square Wave Component
 function SquareWave({ speed }) {
   const canvasRef = useRef(null);
   const animRef = useRef(null);
@@ -287,6 +504,7 @@ function SquareWave({ speed }) {
   return <canvas ref={canvasRef} style={{ display: 'block', border: '1px solid #1a2540', borderRadius: '8px', flexGrow: 2, maxWidth: '600px' }} />;
 }
 
+// Instruction Display Component
 function InstructionDisplay({ speed }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const intervalRef = useRef(null);
@@ -301,8 +519,19 @@ function InstructionDisplay({ speed }) {
   }, [speed]);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', background: '#0e1524', padding: '1.25rem', borderRadius: '8px', border: '1px solid #1a2540' }}>
-      <div style={{ color: '#8892b0', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Instruction Stream (IF Stage Focus)</div>
+    <div style={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      gap: '0.75rem', 
+      background: 'rgba(14, 21, 36, 0.8)',
+      backdropFilter: 'blur(10px)',
+      padding: '1.25rem', 
+      borderRadius: '8px', 
+      border: '1px solid #1a2540'
+    }}>
+      <div style={{ color: '#8892b0', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '1px' }}>
+        Instruction Stream (IF Stage Focus)
+      </div>
       <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
         {INSTRUCTIONS.map((instr, i) => {
           const isActive = i === activeIndex;
@@ -334,6 +563,7 @@ function InstructionDisplay({ speed }) {
   );
 }
 
+// Pipeline Gantt Component
 function PipelineGantt({ speed }) {
   const TOTAL_CYCLES = INSTRUCTIONS.length + STAGES.length - 1;
   const [cycle, setCycle] = useState(0);
@@ -357,8 +587,17 @@ function PipelineGantt({ speed }) {
   }
 
   return (
-    <div style={{ background: '#0e1524', padding: '1.25rem', borderRadius: '8px', border: '1px solid #1a2540', overflowX: 'auto' }}>
-      <div style={{ color: '#8892b0', fontSize: '0.85rem', textTransform: 'uppercase', marginBottom: '1rem', letterSpacing: '1px' }}>5-Stage Execution Gantt Chart</div>
+    <div style={{ 
+      background: 'rgba(14, 21, 36, 0.8)',
+      backdropFilter: 'blur(10px)',
+      padding: '1.25rem', 
+      borderRadius: '8px', 
+      border: '1px solid #1a2540', 
+      overflowX: 'auto'
+    }}>
+      <div style={{ color: '#8892b0', fontSize: '0.85rem', textTransform: 'uppercase', marginBottom: '1rem', letterSpacing: '1px' }}>
+        5-Stage Execution Gantt Chart
+      </div>
       <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '4px', color: '#e8edf2', fontSize: '0.85rem' }}>
         <thead>
           <tr>
